@@ -3,6 +3,16 @@ Weather tg sender
 
 Telegram bot sending channel weather info
 
+Running code
+--------------
+
+* Terminal command::
+
+    $ mkdir pogoda
+    $ cd pogoda
+    $ source venv/bin/activate
+    $ pip install -f req.txt
+    
 Installing
 --------------
 
