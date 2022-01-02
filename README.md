@@ -3,22 +3,14 @@ Weather tg sender
 
 Telegram bot sending channel weather info
 
-:License: MITa
-
-Settings
---------
-
-Moved to settings_.
-
-.. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
-
-Basic Commands
+Installing
 --------------
 
 
 * Terminal command::
 
     $ nano /etc/environment
+    
 * Write token::
 
     $ token_pogodas="12345678:TOKEN"
