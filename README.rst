@@ -60,8 +60,12 @@ Installing
     
 * Type this command::
 
-    systemctl enable fonlinebot
-    systemctl start fonlinebot
+    $ systemctl enable fonlinebot
+    $ systemctl start fonlinebot
+    
+* Edit time send from main.py code line::
+
+    schedule.every().day.at("03:06").do(function_to_run)
 
 For example
 --------------
