@@ -21,9 +21,9 @@ Installing
 
     $ nano /etc/environment
     
-* Write token::
+* Write token from one line::
 
-    $ token_pogodas="12345678:TOKEN"
+    token_pogodas="12345678:TOKEN"
     
 * Add this bot and change role for Admin
 
