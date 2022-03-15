@@ -12,9 +12,9 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
     level=logging.WARNING
 )
+API_KEY = os.environ.get("owm_key")
 
 TOKEN = os.environ.get("token_pogodas")
-
 
 
 

@@ -8,11 +8,16 @@ from time import sleep
 from config import TOKEN
 
 bot = telebot.TeleBot(TOKEN)
-#some_id = 390736292 # This is our chat id.
-some_id = "@pogodas"
+some_id = 668020547 # This is our chat id.
+# some_id = "@pogodas"
 
 links = ["https://pogoda.uz/tashkent", "https://obhavo.uz/tashkent"]
 
+
+@bot.message_handler()
+def some_text(message: telebot.types.Message):
+    print(message)
+    function_to_run()
 
 
 def schedule_checker():
@@ -82,6 +87,6 @@ if __name__ == "__main__":
     # This will take the function schedule_checker which will check every second
     # to see if the scheduled job needs to be ran.
     Thread(target=schedule_checker).start() 
-
+    bot.polling()
     # And then of course, start your server.
     
