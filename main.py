@@ -23,7 +23,7 @@ def schedule_checker():
         sleep(1)
 
 
-def get_text(links):
+def get_text():
     dictionary = get_today_weather_data(w_first_day)
     print(dictionary)
     cur_day = dictionary['current_day']
