@@ -1,4 +1,3 @@
-
 import os
 import logging
 import datetime
@@ -15,8 +14,6 @@ logging.basicConfig(
 API_KEY = os.environ.get("owm_key")
 
 TOKEN = os.environ.get("token_pogodas")
-
-
 
 
 def config(filename='database.ini', section='postgresql'):

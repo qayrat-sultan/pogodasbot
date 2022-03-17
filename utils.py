@@ -1,6 +1,6 @@
+import logging
+
 from pyowm import OWM
-from pyowm.utils import config
-from pyowm.utils import timestamps
 from pyowm.weatherapi25.weather import Weather
 
 import config
@@ -21,18 +21,36 @@ w_humidity = observation.forecast_daily[0].humidity
 
 def get_today_weather_data(w_day: Weather):
     temp_c = w_day.temperature('celsius')
+    status = {"Rain": "🌧",
+              "light rain": "🌦",
+              "None": "☀️"}
+
+    short = {'11d': "⛈",
+             '10d': "🌦",
+             '09d': "🌧",
+             '13d': "🌨",
+             '50d': "🌫️",
+             '01d': "☀️",
+             '01n': "☀️",
+             '02d': "⛅️",
+             '02n': "⛅️",
+             '03d': "☁️",
+             '03n': "☁️",
+             '04d': "☁️",
+             '04n': "☁️",
+             }
     diction = {'tong': temp_c['morn'],
                'kun': temp_c['eve'],
                'oqshom': temp_c['night'],
                'min': temp_c['min'],
                'max': temp_c['max'],
                'namlik': w_day.humidity,
-               'shamol': w_day.wnd,
+               'chiqish': datetime.fromtimestamp(w_day.sunrise_time()).strftime("%H:%M"),
+               'botish': datetime.fromtimestamp(w_day.sunset_time()).strftime("%H:%M"),
+               'current_day': datetime.fromtimestamp(w_day.reference_time()).strftime("%d %b"),
+               # 'ico': short[w_day.weather_icon_name],
+               'status_ico': status.get(w_day.status, "None"),
+               'detail_status_ico': status.get(w_day.detailed_status, "None")
                }
-    print(diction)
+    logging.info(f"Bugungu statistika: {diction}")
     return diction
-
-get_today_weather_data(w_first_day)
-# pprint.pprint(w_daily)
-# print(w_hourly)
-# print(w_daily)
