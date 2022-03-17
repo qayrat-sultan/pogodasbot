@@ -75,5 +75,5 @@ if __name__ == "__main__":
     # This will take the function schedule_checker which will check every second
     # to see if the scheduled job needs to be ran.
     Thread(target=schedule_checker).start()
-    bot.polling()
+    # bot.polling()
     # And then of course, start your server.
