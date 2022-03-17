@@ -1,5 +1,6 @@
 import schedule
 import telebot
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from threading import Thread
 from time import sleep
 from utils import get_today_weather_data, w_first_day
@@ -62,8 +63,18 @@ x, y = get_text()
 
 
 def function_to_run():
-    return bot.send_message(some_id, x, disable_notification=True), bot.send_message(some_id, y,
-                                                                                     disable_notification=True)
+    keyboard_ru = InlineKeyboardMarkup(row_width=1)
+    button_ru = InlineKeyboardButton("Другой город", url="https://t.me/pogodasuzbot?start=ru")
+    keyboard_ru.add(button_ru)
+    keyboard_uz = InlineKeyboardMarkup(row_width=1)
+    button_uz = InlineKeyboardButton("Boshqa shahar", url="https://t.me/pogodasuzbot?start=uz")
+    keyboard_uz.add(button_uz)
+    return bot.send_message(some_id, x,
+                            disable_notification=True,
+                            reply_markup=keyboard_ru), \
+           bot.send_message(some_id, y,
+                            disable_notification=True,
+                            reply_markup=keyboard_uz)
 
 
 if __name__ == "__main__":
