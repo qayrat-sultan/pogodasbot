@@ -3,12 +3,13 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from threading import Thread
 from time import sleep
-from utils import get_today_weather_data, w_first_day
+from utils import get_today_weather_data, w_first_day, w_hourly
 
 from config import TOKEN
 
 bot = telebot.TeleBot(TOKEN)
 some_id = "@pogodas"
+# some_id = 390736292
 
 
 @bot.message_handler()
@@ -25,34 +26,34 @@ def schedule_checker():
 
 
 def get_text():
-    dictionary = get_today_weather_data(w_first_day)
-    print(dictionary)
+    dictionary = get_today_weather_data(w_first_day, w_hourly)
     cur_day = dictionary['current_day']
     sunrise = dictionary['chiqish']
     sunset = dictionary['botish']
-    morn = round(dictionary['tong'])
-    aft = round(dictionary['kun'])
-    night = round(dictionary['oqshom'])
     min = round(dictionary['min'])
     max = round(dictionary['max'])
     namlik = round(dictionary['namlik'])
     status_ico = dictionary['status_ico']
-    detail_status_ico = dictionary['detail_status_ico']
+    morning, afternoon, nightly = dictionary['detailed_text']
     ru_text = f"Сегодня, {cur_day}\n" \
-              f"{status_ico + '+' + str(max) + '°' if max > 0 else status_ico + '-' + str(max) + '°'} " \
-              f"{'+' + str(min) + '°' if min > 0 else '-' + str(min) + '°'}\n" \
-              f"{detail_status_ico} Утром {morn}°\n" \
-              f"{detail_status_ico} Днем {aft}°\n" \
-              f"{detail_status_ico} Вечером {night}°\n\n" \
+              f"{status_ico} {'+' if max>0 else ''} {str(max)}° {'+' if min>0 else ''} {str(min)}°\n" \
+              f"{morning[0]} Утром {'+' if morning[1]>0 else ''} {round(morning[1])}° " \
+              f"(ощущается как {'+' if morning[2]>0 else ''} {round(morning[2])})\n" \
+              f"{afternoon[0]} Днем {'+' if afternoon[1] > 0 else ''} {round(afternoon[1])}° " \
+              f"(ощущается как {'+' if afternoon[2] > 0 else ''} {round(afternoon[2])})\n" \
+              f"{nightly[0]} Вечером {'+' if nightly[1] > 0 else ''} {round(nightly[1])}° " \
+              f"(ощущается как {'+' if nightly[2] > 0 else ''} {round(nightly[2])})\n" \
               f"Влажность: {namlik}%\n" \
               f"Восход: {sunrise}\nЗакат: {sunset}" # noqa
 
     uz_text = f"Bugun, {cur_day}\n" \
-              f"{status_ico + '+' + str(max) + '°' if max > 0 else status_ico + '-' + str(max) + '°'} " \
-              f"{'+' + str(min) + '°' if min > 0 else '-' + str(min) + '°'}\n" \
-              f"{detail_status_ico} Tong {morn}°\n" \
-              f"{detail_status_ico} Kun {aft}°\n" \
-              f"{detail_status_ico} Oqshom {night}°\n\n" \
+              f"{status_ico} {'+' if max>0 else ''} {str(max)}° {'+' if min>0 else ''} {str(min)}°\n" \
+              f"{morning[0]} Tong {'+' if morning[1]>0 else ''} {round(morning[1])}° " \
+              f"({'+' if morning[2]>0 else ''} {round(morning[2])} kabi seziladi)\n" \
+              f"{afternoon[0]} Kun {'+' if afternoon[1] > 0 else ''} {round(afternoon[1])}° " \
+              f"({'+' if afternoon[2] > 0 else ''} {round(afternoon[2])} kabi seziladi)\n" \
+              f"{nightly[0]} Oqshom {'+' if nightly[1] > 0 else ''} {round(nightly[1])}° " \
+              f"({'+' if nightly[2] > 0 else ''} {round(nightly[2])} kabi seziladi)\n" \
               f"Namlik: {namlik}%\n" \
               f"Quyosh chiqishi: {sunrise}\nQuyosh botishi: {sunset}" # noqa
 
@@ -63,25 +64,23 @@ x, y = get_text()
 
 
 def function_to_run():
-    keyboard_ru = InlineKeyboardMarkup(row_width=1)
-    button_ru = InlineKeyboardButton("Другой город", url="https://t.me/pogodasuzbot?start=ru")
-    keyboard_ru.add(button_ru)
-    keyboard_uz = InlineKeyboardMarkup(row_width=1)
-    button_uz = InlineKeyboardButton("Boshqa shahar", url="https://t.me/pogodasuzbot?start=uz")
-    keyboard_uz.add(button_uz)
+    # keyboard_ru = InlineKeyboardMarkup(row_width=1)
+    # button_ru = InlineKeyboardButton("Другой город", url="https://t.me/pogodasuzbot?start=ru")
+    # keyboard_ru.add(button_ru)
+    # keyboard_uz = InlineKeyboardMarkup(row_width=1)
+    # button_uz = InlineKeyboardButton("Boshqa shahar", url="https://t.me/pogodasuzbot?start=uz")
+    # keyboard_uz.add(button_uz)
     return bot.send_message(some_id, x,
-                            disable_notification=True,
-                            reply_markup=keyboard_ru), \
+                            disable_notification=True), \
            bot.send_message(some_id, y,
-                            disable_notification=True,
-                            reply_markup=keyboard_uz)
+                            disable_notification=True)
 
 
 if __name__ == "__main__":
     # Create the job in schedule.
     schedule.every().day.at("03:06").do(function_to_run)
     # schedule.every(10).seconds.do(function_to_run)
-
+    # function_to_run()
     # Spin up a thread to run the schedule check so it doesn't block your bot.
     # This will take the function schedule_checker which will check every second
     # to see if the scheduled job needs to be ran.
