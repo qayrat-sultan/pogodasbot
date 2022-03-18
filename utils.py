@@ -8,8 +8,7 @@ from datetime import datetime
 
 # ---------- FREE API KEY examples ---------------------
 
-# owm = OWM(config.API_KEY)
-owm = OWM("bf1924a05912c0d83c6fdb240fb4684a")
+owm = OWM(config.API_KEY)
 mgr = owm.weather_manager()
 
 # Search for current weather in Tashkent and get details
