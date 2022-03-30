@@ -44,7 +44,7 @@ def get_text():
               f"{nightly[0]} Вечером {'+' if nightly[1] > 0 else ''} {round(nightly[1])}° " \
               f"(ощущается как {'+' if nightly[2] > 0 else ''} {round(nightly[2])})\n" \
               f"Влажность: {namlik}%\n" \
-              f"Восход: {sunrise}\nЗакат: {sunset}" # noqa
+              f"Восход: {sunrise}\nЗакат: {sunset}\n@pogodas" # noqa
 
     uz_text = f"Bugun, {cur_day}\n" \
               f"{status_ico} {'+' if max>0 else ''} {str(max)}° {'+' if min>0 else ''} {str(min)}°\n" \
@@ -55,7 +55,7 @@ def get_text():
               f"{nightly[0]} Oqshom {'+' if nightly[1] > 0 else ''} {round(nightly[1])}° " \
               f"({'+' if nightly[2] > 0 else ''} {round(nightly[2])} kabi seziladi)\n" \
               f"Namlik: {namlik}%\n" \
-              f"Quyosh chiqishi: {sunrise}\nQuyosh botishi: {sunset}" # noqa
+              f"Quyosh chiqishi: {sunrise}\nQuyosh botishi: {sunset}\n@pogodas" # noqa
 
     return ru_text, uz_text
 
