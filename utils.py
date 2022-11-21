@@ -59,4 +59,4 @@ def get_today_weather_data(w_day: Weather, w_hourly_data: list):
     return diction
 
 
-print(get_today_weather_data(w_first_day, w_hourly))
+# print(get_today_weather_data(w_first_day, w_hourly))

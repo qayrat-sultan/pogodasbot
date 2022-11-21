@@ -12,13 +12,6 @@ some_id = "@pogodas"
 # some_id = 390736292
 
 
-@bot.message_handler()
-def some_text(message: telebot.types.Message):
-    print(message)
-    x = function_to_run()
-    print(x)
-
-
 def schedule_checker():
     while True:
         schedule.run_pending()
@@ -60,9 +53,6 @@ def get_text():
     return ru_text, uz_text
 
 
-x, y = get_text()
-
-
 def function_to_run():
     # keyboard_ru = InlineKeyboardMarkup(row_width=1)
     # button_ru = InlineKeyboardButton("Другой город", url="https://t.me/pogodasuzbot?start=ru")
@@ -70,20 +60,21 @@ def function_to_run():
     # keyboard_uz = InlineKeyboardMarkup(row_width=1)
     # button_uz = InlineKeyboardButton("Boshqa shahar", url="https://t.me/pogodasuzbot?start=uz")
     # keyboard_uz.add(button_uz)
+    x, y = get_text()
     return bot.send_message(some_id, x,
                             disable_notification=True), \
            bot.send_message(some_id, y,
                             disable_notification=True)
 
-
 if __name__ == "__main__":
+    function_to_run()
     # Create the job in schedule.
-    schedule.every().day.at("03:06").do(function_to_run)
+    # schedule.every().day.at("03:06").do(function_to_run)
     # schedule.every(10).seconds.do(function_to_run)
     # function_to_run()
     # Spin up a thread to run the schedule check so it doesn't block your bot.
     # This will take the function schedule_checker which will check every second
     # to see if the scheduled job needs to be ran.
-    Thread(target=schedule_checker).start()
+    # Thread(target=schedule_checker).start()
     # bot.polling()
     # And then of course, start your server.
