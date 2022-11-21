@@ -2,6 +2,10 @@ import os
 import logging
 import datetime
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 formatter = '[%(asctime)s] %(levelname)8s --- %(message)s (%(filename)s:%(lineno)s)'
 logging.basicConfig(
     filename=f'bot-from-{datetime.datetime.now().date()}.log',
